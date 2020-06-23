@@ -1,6 +1,3 @@
-// Exercise 3
-// ----------
-
 let mostPopularFood = [
   'bean burritos',
   'poke bowl',
@@ -13,3 +10,16 @@ let mostPopularFood = [
   'parmesan chicken',
   'buffalo-flavored cauliflower',
 ];
+
+function sortAlphabetically(list) {
+  return [...list].sort((a, b) => {
+    if (a > b) return 1;
+    if (a < b) return -1;
+    else return 0;
+  }).forEach(item => {
+    let rank = mostPopularFood.indexOf(item);
+    console.log(`${item} (${rank + 1})`)
+  });
+};
+
+sortAlphabetically(mostPopularFood);
