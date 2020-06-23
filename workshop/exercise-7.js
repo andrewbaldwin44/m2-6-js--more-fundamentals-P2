@@ -1,6 +1,3 @@
-// Exercise 7
-// ----------
-
 let foodPairings = {
   burgers: 'beer',
   fish: 'white wine',
@@ -8,9 +5,14 @@ let foodPairings = {
   strawberries: 'cream',
 };
 
-// createRecommendations function
+function createRecommendations(pairings) {
+  return Object.entries(pairings).map(([food, pair]) =>
+    `With ${food}, it is best to have ${pair}.`
+  );
+}
 
-// printRecommendations function
+function printRecommendations(recommendations) {
+  recommendations.forEach(recommendation => console.log(recommendation));
+}
 
-// function call (done)
 printRecommendations(createRecommendations(foodPairings));
