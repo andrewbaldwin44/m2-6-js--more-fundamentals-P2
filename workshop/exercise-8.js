@@ -1,6 +1,3 @@
-// Exercise 8
-// ----------
-
 const staffMembers = [
   {
     name: 'Jane Smith',
@@ -48,3 +45,12 @@ const staffMembers = [
     },
   },
 ];
+
+function languageAbility(obj, lang, min) {
+  return obj.filter(staffMember =>
+    staffMember.skillLevels[lang] >= min
+  );
+}
+
+console.log('javascript', languageAbility(staffMembers, 'javascript', 6));
+console.log('python', languageAbility(staffMembers, 'python', 4));
