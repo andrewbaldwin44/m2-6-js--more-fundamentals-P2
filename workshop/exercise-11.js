@@ -1,11 +1,3 @@
-// Exercise 11
-// -----------
-
-// Below are two objects of the same "format".
-// Each object is a mapping between individual people
-// and their favourite desserts
-// Notice that there are duplicates (eg. both Riley and John like "ice-cream").
-
 const favoriteDessertsGroupA = {
   scott: 'brownies',
   fred: 'tiramisu',
@@ -40,61 +32,67 @@ const favouriteDessertsGroupB = {
   minda: 'dessert',
 };
 
-// Exercise 11-1
-// -------------
-// Write a function which takes one of these objects and puts them into an
-// array which is sorted from most popular to least popular. For example,
-// in Group B, the most popular dessert is "pie", so it should be first
-// in the array.
-//
-// For "ties", the order doesn't matter.
-//
-// HINT: You'll need to do this in 2 steps:
-// - First, count how often each dessert appears
-// - Second, put them in order
+// Exercise A
 
-function sortDessertsByPopularity(dessertObject) {
-  // Write code
+function getAllOccurencesOf(dessert, allDesserts) {
+  return allDesserts.filter(d => d == dessert);
 }
 
+function countDesserts(group, allDesserts, uniqueDesserts) {
+  let dessertCount =
+    new Map(uniqueDesserts.map(dessert => {
+      return [dessert, getAllOccurencesOf(dessert, allDesserts).length];
+    }));
+
+  return dessertCount;
+}
+
+function sortDessertsByPopularity(dessertObject) {
+  let allDesserts = Object.values(dessertObject)
+  let uniqueDesserts = [...new Set(allDesserts)];
+
+  let dessertCount = countDesserts(dessertObject, allDesserts, uniqueDesserts);
+
+  return uniqueDesserts.sort((dessertA, dessertB) => {
+    return dessertCount.get(dessertA) - dessertCount.get(dessertB);
+  });
+}
+
+console.log(
+  'Popular desserts in Group A:',
+  sortDessertsByPopularity(favoriteDessertsGroupA)
+);
 console.log(
   'Popular desserts in Group B:',
   sortDessertsByPopularity(favouriteDessertsGroupB)
 );
 
-// Exercise 11-2
-// -------------
-// Create a new object with the following form:
+/*
+Exercise B
 
-// {
-//   'name of dessert': ['name1', 'name2']
-// }
+Expected output for Group B:
 
-// To be clear:
-// - The keys of this object should be the desserts
-// - The values should be arrays of the names of the people who prefer this
-//   dessert.
-
-// Expected output for Group B:
-
-// {
-//   'pie': [ 'alice', 'glinda', 'khloe' ],
-//   'deep-fried mars bar': [ 'betty' ],
-//   'gummy bears': [ 'colin', 'fertrude' ],
-//   'child tears': [ 'damien' ],
-//   'panda express': [ 'ellicia' ],
-//   'not applicable': [ 'hethel' ],
-//   'rum cake': [ 'irsula' ],
-//   'revenge (served cold)': [ 'judas' ],
-//   'easter eggs': [ 'lyndon' ],
-//   'dessert': [ 'minda' ]
-// }
-
-// (The order doesn't matter for objects. Your desserts might be in a different
-// order, and that's 100% OK).
+{
+  'pie': [ 'alice', 'glinda', 'khloe' ],
+  'deep-fried mars bar': [ 'betty' ],
+  'gummy bears': [ 'colin', 'fertrude' ],
+  'child tears': [ 'damien' ],
+  'panda express': [ 'ellicia' ],
+  'not applicable': [ 'hethel' ],
+  'rum cake': [ 'irsula' ],
+  'revenge (served cold)': [ 'judas' ],
+  'easter eggs': [ 'lyndon' ],
+  'dessert': [ 'minda' ]
+}
+*/
 
 function groupPeopleByDessert(dessertObject) {
-  // do something
+  return Object.keys(dessertObject).reduce((total, name) => {
+    let dessert = dessertObject[name];
+
+    total[dessert] ? total[dessert].push(name) : total[dessert] = [name];
+    return total;
+  }, {});
 }
 
 console.log(
