@@ -141,7 +141,7 @@ myFunc([{a: 'bee', c: 'dee'}, {a: 'zee': c: 'vee'}], 'a');
 ```
 
 - Given the key `name`, your function should return an array of all the employee names.
-- Given the key `title', your function should return an array of all the titles.
+- Given the key `title`, your function should return an array of all the titles.
 
 Print the function returns to the console.
 

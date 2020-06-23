@@ -49,6 +49,9 @@ const staffMembers = [
   },
 ];
 
-const getData = (arr, key) => {
-  // return something
+function getData(arr, key) {
+  return arr.map(obj => obj[key]);
 };
+
+console.log(getData(staffMembers, 'name'));
+console.log(getData(staffMembers, 'title'));
