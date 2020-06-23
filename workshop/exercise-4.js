@@ -1,6 +1,3 @@
-// Exercise 4
-// ----------
-
 let foodPairings = {
   burgers: 'beer',
   fish: 'white wine',
@@ -8,8 +5,8 @@ let foodPairings = {
   strawberries: 'cream',
 };
 
-const converter = (obj) => {
-  // do something
+function converter(obj) {
+  return [Object.keys(obj), Object.values(obj)];
 };
 
 console.log(converter(foodPairings));
