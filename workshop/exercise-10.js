@@ -1,6 +1,3 @@
-// Exercise 10
-// -----------
-
 let inputData = {
   name: 'Will Byers',
   age: 9,
@@ -15,75 +12,77 @@ let inputData = {
   motherAge: 35,
   motherStatus: 'worried',
   motherSuperpower1: null,
-  motherSuperpower1: null,
+  motherSuperpower2: null,
   bestFriendName: 'Mike Wheeler',
   bestFriendAge: 9,
   bestFriendStatus: 'frenetic',
   bestFriendSuperpower1: null,
-  bestFriendSuperpower1: null,
+  bestFriendSuperpower2: null,
   girlfriendName: 'Eleven',
   girlfriendAge: 9,
   girlfriendStatus: 'angry',
   girlfriendSuperpower1: 'telepathy',
-  girlfriendSuperpower1: 'multiverse portal sealing',
+  girlfriendSuperpower2: 'multiverse portal sealing',
 };
 
-// We want a function that can transform it from that shape to this shape:
-//
-// {
-//   "name": "Will Byers",
-//   "age": 9,
-//   "status": "upside down",
-//   "address": {
-//     "streetAddress": "123 Whatever street",
-//     "city": "Hawkins",
-//     "state": "Indiana",
-//     "country": "United States"
-//   },
-//   "superpowers": [
-//     "can-blink-lights"
-//   ],
-//   "relationships": [
-//     {
-//       "type": "mother",
-//       "name": "Joyce Byers",
-//       "age": 35,
-//       "status": "worried",
-//       "superpowers": []
-//     },
-//     {
-//       "type": "girlfriend",
-//       "name": "Eleven",
-//       "age": 9,
-//       "status": "angry",
-//       "superpowers": [
-//         "telepathy",
-//         "multiverse portal sealing"
-//       ]
-//     }
-//   ]
-// }
+function getAddressData() {
+  let addressData = {};
 
-// Specifically:
+  addressData.streetAddress = inputData.address1;
+  addressData.city = inputData.addressCity;
+  addressData.state = inputData.addressState;
+  addressData.country = inputData.addressCountry;
 
-// - Address becomes nested in an object
-// - Instead of `superpower1` and `superpower2`, an array is used
-// - Instead of having a "flat" structure for relationships, a new `relationships`
-//   array is added, which holds objects for each relationship.
-// - Each relationship has a `type`, like mother/best-friend/girlfriend
-// - Each relationship also has an array of super powers, same logic as the main
-//   `superpowers` array
-
-// NOTE: For superpowers, you should only have as many items as are available.
-// For example, the main superpowers array should be:
-// ✅ ['can-blink-lights']
-// ⛔️ ['can-blink-lights', null]
-
-function transformData(data) {
-  // Your code here
+  return addressData;
 }
 
-// `JSON.stringify` is used to "pretty-print" the output, so that it's easy
-// to see what it looks like, and debug any problems.
+function getSuperPowers(relationship = '') {
+  let superPowers = [];
+
+  let firstChar = relationship === '' ? 's' : 'S'
+
+  for (let i = 0; i < 2; i++) {
+    let superpower = inputData[`${relationship}${firstChar}uperpower${i + 1}`];
+
+
+    if (superpower) superPowers.push(superpower);
+  }
+
+  return superPowers;
+}
+
+function getPerson(relationship) {
+  let person = {};
+
+  person.type = relationship;
+  person.name = inputData[`${relationship}Name`];
+  person.age = inputData[`${relationship}Age`];
+  person.status = inputData[`${relationship}Status`];
+  person.superPowers = getSuperPowers(relationship);
+
+  return person;
+}
+
+function getRelationshipData() {
+  let relationships = [];
+
+  relationships.push(getPerson('mother'));
+  relationships.push(getPerson('girlfriend'));
+
+  return relationships;
+}
+
+function transformData(data) {
+  let output = {};
+
+  output.name = inputData.name;
+  output.age = inputData.age;
+  output.status = inputData.status;
+  output.address = getAddressData();
+  output.superpowers =  getSuperPowers();
+  output.relationships = getRelationshipData();
+
+  return output;
+}
 
 console.log(JSON.stringify(transformData(inputData), null, 2));
