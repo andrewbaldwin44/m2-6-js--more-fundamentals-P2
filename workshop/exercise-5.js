@@ -1,6 +1,3 @@
-// Exercise 5
-// ----------
-
 const foodPairings = {
   burgers: 'beer',
   fish: 'white wine',
@@ -8,8 +5,10 @@ const foodPairings = {
   strawberries: 'cream',
 };
 
-const getValue = () => {
-  // do something
+function getValue(obj, key) {
+  return Object.keys(obj).includes(key)
+    ? obj[key]
+    : 'not available';
 };
 
 expect(getValue(foodPairings, 'burgers'), 'beer');
